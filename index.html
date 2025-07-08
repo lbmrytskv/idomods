@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="Nowa kolekcja kurtek i odzieży outdoorowej. Sprawdź ofertę FormaSint już teraz!" />
+  <title>FormaSint – Kurtki i Odzież outdoor</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <a href="/" class="logo" title="Powrót do strony głównej">
+      <img src="assets/logo.webp" alt="FormaSint Logo" loading="lazy" />
+    </a>
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="#home" title="Strona główna">HOME</a></li>
+        <li><a href="#featured" title="Polecane produkty">FEATURED PRODUCTS</a></li>
+        <li><a href="#listing" title="Wszystkie produkty">PRODUCT LISTING</a></li>
+      </ul>
+    </nav>
+
+    <button id="menu-toggle" aria-label="Otwórz menu mobilne">☰</button>
+
+    <nav class="mobile-nav" id="mobileMenu">
+      <button id="menu-close" aria-label="Zamknij menu">✕</button>
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#featured">FEATURED PRODUCTS</a></li>
+        <li><a href="#listing">PRODUCT LISTING</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home">
+      <h1>Nowa kolekcja FormaSint</h1>
+      <p>Poczuj jakość i styl odzieży outdoorowej zaprojektowanej na ekstremalne warunki.</p>
+      <img 
+        src="assets/hero-small.webp" 
+        srcset="assets/hero-small.webp 600w, assets/hero-large.webp 1200w"
+        sizes="(max-width: 768px) 100vw, 50vw"
+        alt="Mężczyzna w pomarańczowej kurtce w lodowcu"
+        loading="lazy"
+      />
+    </section>
+
+    <section id="featured">
+      <h2>Polecane produkty</h2>
+      <div id="featured-products" class="product-grid"></div>
+    </section>
+
+    <section id="listing">
+      <h2>Wszystkie produkty</h2>
+      <p>Tu znajdą się wszystkie produkty z kategorii outdoor.</p>
+      <!-- TODO: Listing will be added later -->
+    </section>
+  </main>
+
+  <footer>
+    <section class="social">
+      <p>Znajdź nas na Instagramie, Facebooku i Twitterze</p>
+    </section>
+    <section class="legal">
+      <p>© 2025 FormaSint. Wszelkie prawa zastrzeżone.</p>
+    </section>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

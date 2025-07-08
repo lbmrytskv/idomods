@@ -1,0 +1,46 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.desktop-nav ul,
+.mobile-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: white;
+  padding: 1rem;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+  #menu-toggle {
+    display: block;
+  }
+}
