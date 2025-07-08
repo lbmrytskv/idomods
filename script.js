@@ -1,35 +1,60 @@
 const metaDescription = document.querySelector('meta[name="description"]');
 
 const sectionsMeta = {
-  "#home": {
+  "/": {
     title: "FormaSint – Kurtki i Odzież outdoor",
-    description: "Nowa kolekcja kurtek i odzieży outdoorowej. Sprawdź ofertę FormaSint już teraz!"
+    description: "Nowa kolekcja kurtek i odzieży outdoorowej. Sprawdź ofertę FormaSint już teraz!",
+    selector: "#home"
   },
-  "#featured": {
+  "/featured": {
     title: "Polecane produkty – FormaSint",
-    description: "Zobacz najczęściej wybierane kurtki i akcesoria od FormaSint."
+    description: "Zobacz najczęściej wybierane kurtki i akcesoria od FormaSint.",
+    selector: "#featured"
   },
-  "#listing": {
+  "/listing": {
     title: "Lista produktów – FormaSint",
-    description: "Pełna lista produktów outdoorowych od FormaSint – odzież na każdą pogodę."
+    description: "Pełna lista produktów outdoorowych od FormaSint – odzież na każdą pogodę.",
+    selector: "#listing"
   }
 };
 
-window.addEventListener("hashchange", () => {
-  const hash = window.location.hash;
-  const meta = sectionsMeta[hash];
-  if (meta) {
-    document.title = meta.title;
-    metaDescription.setAttribute("content", meta.description);
-  }
+function normalizePath(path) {
+  if (path === "" || path === "/index.html") return "/";
+  return path.replace(/\/+$/, "");
+}
+
+function handleRoute(path) {
+  const cleanPath = normalizePath(path);
+  const meta = sectionsMeta[cleanPath] || sectionsMeta["/"];
+  document.title = meta.title;
+  metaDescription.setAttribute("content", meta.description);
+
+  document.querySelectorAll("main section").forEach((sec) => {
+    if (sec.id !== "featured") {
+      sec.style.display = "none";
+    }
+  });
+  const section = document.querySelector(meta.selector);
+  if (section) section.style.display = "block";
+}
+
+document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    const href = this.getAttribute("href");
+    const fullUrl = new URL(href, window.location.origin);
+    const newPath = fullUrl.pathname;
+    history.pushState({}, "", newPath);
+    handleRoute(newPath);
+  });
 });
 
-// Mobile menu toggle
-document.getElementById("menu-toggle").addEventListener("click", () => {
-  document.getElementById("mobileMenu").style.display = "block";
+window.addEventListener("popstate", () => {
+  handleRoute(location.pathname);
 });
-document.getElementById("menu-close").addEventListener("click", () => {
-  document.getElementById("mobileMenu").style.display = "none";
+
+window.addEventListener("DOMContentLoaded", () => {
+  handleRoute(location.pathname);
 });
 
 // Fetch featured products
@@ -39,9 +64,11 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
     const container = document.getElementById("featured-products");
     data.data.forEach((product) => {
       const article = document.createElement("article");
+      article.classList.add("product-card");
       article.innerHTML = `
         <img src="${product.image}" loading="lazy" alt="${product.text}" />
-        <p>${product.text}</p>
+        <div class="product-title">${product.text}</div>
+        <div class="product-price">€200.00</div>
       `;
       container.appendChild(article);
     });

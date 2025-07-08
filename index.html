@@ -7,44 +7,85 @@
   <meta name="description" content="Nowa kolekcja kurtek i odzieży outdoorowej. Sprawdź ofertę FormaSint już teraz!" />
   <title>FormaSint – Kurtki i Odzież outdoor</title>
 
-  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header class="top-bar">
     <div class="header-left">
-      <img src="assets/icons/FORMA ICON.webp" alt="FormaSint Logo" class="logo" loading="lazy" />
+      <a href="./" class="logo-link">
+        <img
+          src="assets/icons/FORMA ICON.webp"
+          srcset="assets/icons/FORMA ICON.webp 1x, assets/icons/FORMA ICON@2x.webp 2x"
+          alt="Logo marki FormaSint – outdoorowa odzież męska"
+          class="logo"
+          loading="lazy"
+          width="24"
+          height="24"
+        />
+      </a>
       <span class="brand">Forma’sint.</span>
       <span class="subbrand">idomods &lt;/&gt;</span>
     </div>
 
     <nav class="desktop-nav">
       <ul>
-        <li><a href="#home" class="active">HOME</a></li>
-        <li><a href="#featured">FEATURED PRODUCTS</a></li>
-        <li><a href="#listing">PRODUCT LISTING</a></li>
+        <li><a href="./" class="nav-link">HOME</a></li>
+        <li><a href="featured" class="nav-link">FEATURED PRODUCTS</a></li>
+        <li><a href="listing" class="nav-link">PRODUCT LISTING</a></li>
       </ul>
     </nav>
 
     <div class="header-right">
-      <img src="assets/icons/ICONS.webp" alt="Avatar" class="avatar" />
+      <img
+        src="assets/icons/ICONS.webp"
+        srcset="assets/icons/ICONS.webp 1x, assets/icons/ICONS@2x.webp 2x"
+        alt="Avatar developera frontend"
+        class="avatar"
+        loading="lazy"
+        width="24"
+        height="24"
+      />
       <span class="role">Frontend developer</span>
     </div>
   </header>
+
   <main>
     <section id="home" class="home-section">
       <div class="home-content">
-        <div class="home-text">
-          <h1>This is H1</h1>
-        </div>
+        <h1 class="h1">Forma’Sint.</h1>
+        <img
+          src="assets/images/HERO PHOTO.webp"
+          srcset="assets/images/HERO PHOTO.webp 1x, assets/images/HERO PHOTO@2x.webp 2x"
+          alt="Wspinacz na tle lodowca w pomarańczowej kurtce outdoorowej"
+          class="hero-img"
+          loading="lazy"
+          width="1836"
+          height="732"
+        />
       </div>
     </section>
+
+    <section id="featured" class="featured-section">
+      <div class="section-title">
+        <h2 class="h2">Browse Featured</h2>
+      </div>
+      <div id="featured-products"></div>
+    </section>
+
+    <section id="listing" style="display: none;">
+      <div class="section-title">
+        <h2 class="h1">Lista produktów</h2>
+      </div>
+      <div>Tu będzie lista wszystkich produktów...</div>
+    </section>
   </main>
+
   <footer>
+    <!-- Footer content -->
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
