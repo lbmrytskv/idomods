@@ -1,6 +1,4 @@
 :root {
-  font-size: 16px; 
-
   --font-primary: 'Inter', sans-serif;
 
   --font-size-h1: 96px;
@@ -139,9 +137,6 @@ body {
   background-color: #fff;
 }
 
-.home-content {
-  /* використовує .container */
-}
 
 .hero-img {
   display: block;
@@ -198,4 +193,90 @@ body {
 .section-title {
   margin: 0 auto 32px;
   padding: 0 24px;
+}
+
+.section-subtitle {
+  font-size: var(--font-size-body); 
+  font-weight: var(--font-weight-medium); 
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  line-height: 150%;
+  margin-bottom: 4px;
+}
+
+/* === LISTING SECTION === */
+.listing-section {
+  padding: 42px 48px;
+  background-color: #fff;
+}
+
+.listing-controls {
+  margin-bottom: 32px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.listing-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 42px;
+  justify-content: center;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 32px 96px;
+  width: 906px;
+  height: 441px;
+  background: url("assets/images/banner.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  gap: 24px;
+}
+
+.banner-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.banner-btn {
+  background: #fff;
+  color: #1D1D1D;
+  padding: 12px 48px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* === PAGINATION === */
+.pagination-controls {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pagination-controls button {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.pagination-controls button.active {
+  background: #1D1D1D;
+  color: #fff;
+  border-color: #1D1D1D;
 }
