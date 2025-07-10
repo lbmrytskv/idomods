@@ -233,9 +233,10 @@ function renderProducts(products) {
       banner.className = "banner";
       banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
       banner.innerHTML = `
-        <div class="banner-title">You'll look and feel like the champion.</div>
-        <button class="banner-btn">Check this out →</button>
-      `;
+  <div class="banner-label">FORMA’SINT.</div>
+  <div class="banner-title">You'll look and feel like the champion.</div>
+  <button class="banner-btn">CHECK THIS OUT</button>
+   `;
       productGrid.appendChild(banner);
       bannerInserted = true;
     }

@@ -148,7 +148,7 @@ body {
 
 /* === FEATURED PRODUCTS === */
 .featured-section {
-  padding: 42px 48px;
+  padding: 96px 42px;
   background-color: #fff;
 }
 
@@ -171,10 +171,12 @@ body {
   gap: 24px;
   background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 16px;
+  padding: 32px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
   cursor: pointer;
+
+  
 }
 
 .product-card img {
@@ -212,7 +214,7 @@ body {
 
 /* === LISTING CONTROLS === */
 .listing-controls {
-  margin-bottom: 32px;
+  margin-bottom: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -299,6 +301,9 @@ body {
   padding-bottom: 4px;
 }
 
+.listing-section {
+  padding: 42px;;
+}
 
 
 /* === GRID SYSTEM === */
@@ -319,34 +324,59 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 32px 24px;
+  gap: 64px;
+  padding: 32px;
   background: url("assets/images/banner.jpg");
   background-size: cover;
   background-position: center;
   border-radius: 8px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
   min-height: 200px;
   width: 100%;
   justify-self: stretch;
 }
 
-.banner-title {
-  font-size: 32px;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 16px;
+.banner-label {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%; /* 22px */
   text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #1D1D1D;
+  width: 714px;
+}
+
+.banner-title {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 120%; /* 50px */
+  letter-spacing: -0.02em;
+  color: #1D1D1D;
+  width: 714px;
 }
 
 .banner-btn {
-  background: #fff;
-  color: #1D1D1D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 12px 48px;
+  gap: 8px;
+  width: 262px;
+  height: 48px;
+  background: #FFFFFF;
   border: none;
   border-radius: 6px;
-  cursor: pointer;
+  font-family: 'Inter', sans-serif;
   font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
@@ -354,6 +384,7 @@ body {
   background: #f0f0f0;
   transform: translateY(-2px);
 }
+
 
 /* === POPUP MODAL === */
  
@@ -470,6 +501,7 @@ body {
   }
 
   .product-card {
+    
     width: 420px;
   }
 
