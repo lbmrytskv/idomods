@@ -209,19 +209,97 @@ body {
   margin-bottom: 4px;
 }
 
-/* === LISTING SECTION === */
-.listing-section {
-  padding: 42px 48px;
-  background-color: #fff;
-}
 
+/* === LISTING CONTROLS === */
 .listing-controls {
   margin-bottom: 32px;
   display: flex;
-  gap: 16px;
+  justify-content: center;
   align-items: center;
-  padding: 0 24px;
+  gap: 8px;
+  padding: 0;
+  height: 24px;
 }
+
+.listing-controls label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  line-height: var(--line-height-body);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.dropdown-wrapper {
+  position: relative;
+  width: 75px;
+  height: 24px;
+  
+}
+
+.custom-select-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 24px;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.custom-icon {
+  width: 24px;
+  height: 24px;
+  background: #1D1D1D;
+  mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat center;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat center;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  
+}
+
+.custom-options {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75px;
+  height: 116px;
+  padding: 12px;
+  border: 1px solid #EAEAE8;
+  border-radius: 6px;
+  background: #fff;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100;
+  list-style: none;
+}
+
+.custom-options.active {
+  display: flex;
+}
+
+.custom-option {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-option.selected {
+  border-bottom: 1px solid #000;
+  padding-bottom: 4px;
+}
+
+
 
 /* === GRID SYSTEM === */
 .listing-grid {

@@ -61,37 +61,37 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 // Popup functionality
-    const popupOverlay = document.getElementById('popup-overlay');
-    const popupImage = document.getElementById('popup-image');
-    const popupId = document.querySelector('.popup-id');
-    const popupCloseMenu = document.querySelector('.popup-close-menu');
+const popupOverlay = document.getElementById('popup-overlay');
+const popupImage = document.getElementById('popup-image');
+const popupId = document.querySelector('.popup-id');
+const popupCloseMenu = document.querySelector('.popup-close-menu');
 
-    function openPopup(product, index) {
-      popupImage.src = product.image;
-      popupImage.alt = product.text;
-      popupId.textContent = `ID: ${String(index + 1).padStart(2, '0')}`;
-      popupOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+function openPopup(product, index) {
+  popupImage.src = product.image;
+  popupImage.alt = product.text;
+  popupId.textContent = `ID: ${String(index + 1).padStart(2, '0')}`;
+  popupOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
 
-    function closePopup() {
-      popupOverlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
+function closePopup() {
+  popupOverlay.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
 
-    popupCloseMenu.addEventListener('click', closePopup);
+popupCloseMenu.addEventListener('click', closePopup);
 
-    popupOverlay.addEventListener('click', (e) => {
-      if (e.target === popupOverlay) {
-        closePopup();
-      }
-    });
+popupOverlay.addEventListener('click', (e) => {
+  if (e.target === popupOverlay) {
+    closePopup();
+  }
+});
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closePopup();
-      }
-    });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closePopup();
+  }
+});
 
 // Fetch featured products
 fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
@@ -107,7 +107,6 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
         <div class="product-price">€200.00</div>
       `;
 
-      
       article.addEventListener("click", () => {
         openPopup(product, index);
       });
@@ -115,7 +114,6 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
       container.appendChild(article);
     });
   });
-
 
 // === PRODUCT LISTING ===
 const listingSection = document.getElementById("listing");
@@ -133,6 +131,57 @@ pageSizeSelect.addEventListener("change", (e) => {
   loadProducts();
 });
 
+// === CUSTOM DROPDOWN SYNC WITH SELECT ===
+const customToggle = document.getElementById("customSelectToggle");
+const customOptions = document.getElementById("customOptions");
+const selectedSpan = customToggle.querySelector(".custom-selected");
+const optionItems = customOptions.querySelectorAll(".custom-option");
+
+if (customToggle && customOptions && selectedSpan && optionItems.length) {
+  let isOpen = false;
+
+  function updateDropdownValue(value) {
+    selectedSpan.textContent = value;
+
+    optionItems.forEach(i => i.classList.remove("selected"));
+    const selectedItem = customOptions.querySelector(`[data-value="${value}"]`);
+    if (selectedItem) selectedItem.classList.add("selected");
+
+    pageSizeSelect.value = value;
+    pageSize = parseInt(value);
+    currentPage = 1;
+    loadProducts();
+  }
+
+  customToggle.addEventListener("click", () => {
+    isOpen = !isOpen;
+    customToggle.style.display = isOpen ? "none" : "flex";
+    customOptions.classList.toggle("active", isOpen);
+  });
+
+  optionItems.forEach(option => {
+    option.addEventListener("click", () => {
+      const value = option.getAttribute("data-value");
+      updateDropdownValue(value);
+
+      isOpen = false;
+      customToggle.style.display = "flex";
+      customOptions.classList.remove("active");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      !customToggle.contains(e.target) &&
+      !customOptions.contains(e.target)
+    ) {
+      isOpen = false;
+      customToggle.style.display = "flex";
+      customOptions.classList.remove("active");
+    }
+  });
+}
+
 
 
 // Function for measuring columns count in grid
@@ -146,7 +195,6 @@ function getGridColumns() {
   return columnCount;
 }
 
-
 // Function for measuring banner position 
 function getBannerPosition(columns) {
   switch(columns) {
@@ -158,11 +206,8 @@ function getBannerPosition(columns) {
       return { position: 4, span: 2 }; 
     default:
       return { position: 5, span: 2 }; 
-      
   }
 }
-
-
 
 function loadProducts() {
   fetch(`https://brandstestowy.smallhost.pl/api/random?pageNumber=${currentPage}&pageSize=${pageSize}`)
@@ -173,7 +218,6 @@ function loadProducts() {
       renderPagination();
     });
 }
-
 
 function renderProducts(products) {
   productGrid.innerHTML = "";
@@ -204,7 +248,6 @@ function renderProducts(products) {
       <div class="product-price">€200.00</div>
     `;
 
-    
     card.addEventListener("click", () => {
       openPopup(product, index);
     });
@@ -212,7 +255,6 @@ function renderProducts(products) {
     productGrid.appendChild(card);
   });
 }
-
 
 function renderPagination() {
   pagination.innerHTML = "";
@@ -232,12 +274,10 @@ function renderPagination() {
   }
 }
 
-
 let resizeTimeout;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    
     if (currentPage === 1) {
       loadProducts();
     }

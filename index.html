@@ -78,16 +78,30 @@
 </section>
 
     <section id="listing" class="listing-section">
-      <div class="section-title">
-        <h2 class="h2">Product listing</h2>
-      </div>
       <div class="listing-controls">
-        <label for="pageSizeSelect">Number of products per page:</label>
-        <select id="pageSizeSelect">
-          <option value="14">14</option>
-          <option value="24">24</option>
-          <option value="36">36</option>
-        </select>
+  <label for="pageSizeSelect">Number of products per page:</label>
+
+  <div class="dropdown-wrapper">
+    <div class="custom-select-toggle" id="customSelectToggle">
+      <span class="custom-selected">14</span>
+      <span class="custom-icon"></span>
+    </div>
+    <ul class="custom-options" id="customOptions">
+      <li data-value="14" class="custom-option selected">14</li>
+      <li data-value="24" class="custom-option">24</li>
+      <li data-value="36" class="custom-option">36</li>
+    </ul>
+
+    <!-- Прихований select для логіки -->
+    <select id="pageSizeSelect" style="display: none;">
+      <option value="14" selected>14</option>
+      <option value="24">24</option>
+      <option value="36">36</option>
+    </select>
+  </div>
+</div>
+
+
       </div>
       <div id="product-listing" class="listing-grid container"></div>
 
