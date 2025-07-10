@@ -60,12 +60,45 @@ window.addEventListener("DOMContentLoaded", () => {
   loadProducts();
 });
 
+// Popup functionality
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popupImage = document.getElementById('popup-image');
+    const popupId = document.querySelector('.popup-id');
+    const popupCloseMenu = document.querySelector('.popup-close-menu');
+
+    function openPopup(product, index) {
+      popupImage.src = product.image;
+      popupImage.alt = product.text;
+      popupId.textContent = `ID: ${String(index + 1).padStart(2, '0')}`;
+      popupOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePopup() {
+      popupOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    popupCloseMenu.addEventListener('click', closePopup);
+
+    popupOverlay.addEventListener('click', (e) => {
+      if (e.target === popupOverlay) {
+        closePopup();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePopup();
+      }
+    });
+
 // Fetch featured products
 fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
   .then((res) => res.json())
   .then((data) => {
     const container = document.getElementById("featured-products");
-    data.data.forEach((product) => {
+    data.data.forEach((product, index) => {
       const article = document.createElement("article");
       article.classList.add("product-card");
       article.innerHTML = `
@@ -73,9 +106,16 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
         <div class="product-title">${product.text}</div>
         <div class="product-price">€200.00</div>
       `;
+
+      
+      article.addEventListener("click", () => {
+        openPopup(product, index);
+      });
+
       container.appendChild(article);
     });
   });
+
 
 // === PRODUCT LISTING ===
 const listingSection = document.getElementById("listing");
@@ -137,18 +177,16 @@ function loadProducts() {
 
 function renderProducts(products) {
   productGrid.innerHTML = "";
-  
+
   const columns = getGridColumns();
   const bannerConfig = getBannerPosition(columns);
-  
+
   let bannerInserted = false;
-  
+
   products.forEach((product, index) => {
-    
     if (currentPage === 1 && index === bannerConfig.position && !bannerInserted) {
       const banner = document.createElement("div");
       banner.className = "banner";
-    
       banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
       banner.innerHTML = `
         <div class="banner-title">You'll look and feel like the champion.</div>
@@ -165,9 +203,16 @@ function renderProducts(products) {
       <div class="product-title">${product.text}</div>
       <div class="product-price">€200.00</div>
     `;
+
+    
+    card.addEventListener("click", () => {
+      openPopup(product, index);
+    });
+
     productGrid.appendChild(card);
   });
 }
+
 
 function renderPagination() {
   pagination.innerHTML = "";
