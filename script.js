@@ -18,7 +18,6 @@ const sectionsMeta = {
   }
 };
 
-
 function normalizePath(path) {
   if (path === "" || path === "/index.html") return "/";
   return path.replace(/\/+$/, "");
@@ -40,7 +39,6 @@ function handleRoute(path) {
     loadProducts();
   }
 }
-
 
 document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
   link.addEventListener("click", function (e) {
@@ -81,11 +79,9 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
 
 // === PRODUCT LISTING ===
 const listingSection = document.getElementById("listing");
-
 const productGrid = document.getElementById("product-listing");
 const pagination = document.getElementById("pagination");
 const pageSizeSelect = document.getElementById("pageSizeSelect");
-
 
 let currentPage = 1;
 let pageSize = 14;
@@ -98,6 +94,36 @@ pageSizeSelect.addEventListener("change", (e) => {
 });
 
 
+
+// Function for measuring columns count in grid
+function getGridColumns() {
+  const grid = document.getElementById("product-listing");
+  if (!grid) return 1;
+
+  const computed = getComputedStyle(grid);
+  const columnCount = computed.gridTemplateColumns.split(" ").length;
+
+  return columnCount;
+}
+
+
+// Function for measuring banner position 
+function getBannerPosition(columns) {
+  switch(columns) {
+    case 4:
+      return { position: 5, span: 2 }; 
+    case 3:
+      return { position: 4, span: 2 }; 
+    case 2:
+      return { position: 4, span: 2 }; 
+    default:
+      return { position: 5, span: 2 }; 
+      
+  }
+}
+
+
+
 function loadProducts() {
   fetch(`https://brandstestowy.smallhost.pl/api/random?pageNumber=${currentPage}&pageSize=${pageSize}`)
     .then((res) => res.json())
@@ -108,18 +134,28 @@ function loadProducts() {
     });
 }
 
+
 function renderProducts(products) {
   productGrid.innerHTML = "";
-
+  
+  const columns = getGridColumns();
+  const bannerConfig = getBannerPosition(columns);
+  
+  let bannerInserted = false;
+  
   products.forEach((product, index) => {
-    if (currentPage === 1 && index === 6) {
+    
+    if (currentPage === 1 && index === bannerConfig.position && !bannerInserted) {
       const banner = document.createElement("div");
       banner.className = "banner";
+    
+      banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
       banner.innerHTML = `
-        <div class="banner-title">You’ll look and feel like the champion.</div>
+        <div class="banner-title">You'll look and feel like the champion.</div>
         <button class="banner-btn">Check this out →</button>
       `;
       productGrid.appendChild(banner);
+      bannerInserted = true;
     }
 
     const card = document.createElement("article");
@@ -150,3 +186,15 @@ function renderPagination() {
     pagination.appendChild(btn);
   }
 }
+
+
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(() => {
+    
+    if (currentPage === 1) {
+      loadProducts();
+    }
+  }, 250);
+});
