@@ -232,11 +232,22 @@ function renderProducts(products) {
       const banner = document.createElement("div");
       banner.className = "banner";
       banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
-      banner.innerHTML = `
-  <div class="banner-label">FORMA’SINT.</div>
-  <div class="banner-title">You'll look and feel like the champion.</div>
-  <button class="banner-btn">CHECK THIS OUT</button>
-   `;
+     banner.innerHTML = `
+  <div class="banner-text">
+    <div class="banner-label">FORMA’SINT.</div>
+    <div class="banner-title">You'll look and feel like the champion.</div>
+  </div>
+  <button class="banner-btn">
+    CHECK THIS OUT
+    <span class="banner-icon">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 5L15 12L8 19" stroke="#1D1D1D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</span>
+
+  </button>
+`;
+
       productGrid.appendChild(banner);
       bannerInserted = true;
     }
@@ -244,9 +255,10 @@ function renderProducts(products) {
     const card = document.createElement("article");
     card.className = "product-card";
     card.innerHTML = `
+    <div class="product-id">ID:${product.id}</div>
       <img src="${product.image}" loading="lazy" alt="${product.text}" />
-      <div class="product-title">${product.text}</div>
-      <div class="product-price">€200.00</div>
+      
+      
     `;
 
     card.addEventListener("click", () => {
