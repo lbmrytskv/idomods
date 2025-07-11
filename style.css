@@ -64,12 +64,7 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* === UTILITY === */
-.container {
-  max-width: 1836px;
-  margin: 0 auto;
-  padding: 0 26px;
-}
+
 
 /* === HEADER === */
 .top-bar {
@@ -79,8 +74,18 @@ body {
   background: #fff;
   padding: 32px 42px;
   gap: 32px;
-  position: relative;
-  z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.top-bar.scrolled {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(234, 234, 232, 0.3);
 }
 
 .header-left {
@@ -165,8 +170,8 @@ body {
 
 
 .product-card {
-  width: 420px;
-  height: 420px;
+  width: 440px;
+  height: 440px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -334,7 +339,6 @@ body {
   justify-content: center;
   justify-items: center;
   width: 100%;
-  max-width: 1836px;
   margin: 0 auto;
 }
 

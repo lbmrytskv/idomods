@@ -1,4 +1,16 @@
 const metaDescription = document.querySelector('meta[name="description"]');
+const topBar = document.querySelector('.top-bar');
+
+// Sticky header scroll effect
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  
+  if (scrollY > 10) {
+    topBar.classList.add('scrolled');
+  } else {
+    topBar.classList.remove('scrolled');
+  }
+});
 
 const sectionsMeta = {
   "/": {
