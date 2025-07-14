@@ -12,6 +12,8 @@ window.addEventListener('scroll', () => {
   }
 });
 
+
+
 const sectionsMeta = {
   "/": {
     title: "FormaSint – Jackets & Outdoor Wear",
@@ -29,6 +31,8 @@ const sectionsMeta = {
     selector: "#listing"
   }
 };
+
+
 
 function normalizePath(path) {
   if (path === "" || path === "/index.html") return "/";
@@ -71,6 +75,8 @@ window.addEventListener("DOMContentLoaded", () => {
   handleRoute(location.pathname);
   loadProducts();
 });
+
+
 
 // Popup functionality
 const popupOverlay = document.getElementById('popup-overlay');
@@ -133,12 +139,12 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
       container.appendChild(slide);
     });
 
-    // Ініціалізуємо Swiper після додавання всіх слайдів
+    //  Swiper initialization
     new Swiper(".swiper", {
       slidesPerView: 1,
       spaceBetween: 24,
       loop: true,
-      // Видаляємо loopAdditionalSlides - Swiper сам визначить оптимальну кількість
+      
       centeredSlides: false,
       navigation: {
         nextEl: ".swiper-button-next",
