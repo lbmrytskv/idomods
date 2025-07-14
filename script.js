@@ -12,8 +12,6 @@ window.addEventListener('scroll', () => {
   }
 });
 
-
-
 const sectionsMeta = {
   "/": {
     title: "FormaSint – Jackets & Outdoor Wear",
@@ -32,8 +30,6 @@ const sectionsMeta = {
   }
 };
 
-
-
 function normalizePath(path) {
   if (path === "" || path === "/index.html") return "/";
   return path.replace(/\/+$/, "");
@@ -48,7 +44,17 @@ function handleRoute(path) {
   const section = document.querySelector(meta.selector);
   if (section) {
     section.style.display = "block";
-    section.scrollIntoView({ behavior: "smooth" });
+    
+    
+    if (cleanPath === "/") {
+      // scrolling to the very top of the page
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+     
+      const headerHeight = topBar.offsetHeight;
+      const elementPosition = section.offsetTop - headerHeight;
+      window.scrollTo({ top: elementPosition, behavior: "smooth" });
+    }
   }
 
   if (cleanPath === "/listing") {
@@ -110,6 +116,32 @@ document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
   });
 });
 
+// Mobile menu functionality
+const mobileToggle = document.querySelector('.mobile-menu-toggle');
+const mobileMenuContainer = document.querySelector('.mobile-menu-container');
+const mobileMenuClose = document.querySelector('.menu-close');
+const menuOverlay = document.querySelector('.menu-overlay');
+const mobileMenuLinks = document.querySelectorAll('.mobile-menu-nav a');
+
+function openMobileMenu() {
+  mobileMenuContainer.classList.add('active');
+  menuOverlay.classList.add('active');
+}
+
+function closeMobileMenu() {
+  mobileMenuContainer.classList.remove('active');
+  menuOverlay.classList.remove('active');
+}
+
+mobileToggle.addEventListener('click', openMobileMenu);
+mobileMenuClose.addEventListener('click', closeMobileMenu);
+menuOverlay.addEventListener('click', closeMobileMenu);
+
+mobileMenuLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    closeMobileMenu();
+  });
+});
 // Popup functionality
 const popupOverlay = document.getElementById('popup-overlay');
 const popupImage = document.getElementById('popup-image');
@@ -149,7 +181,6 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
   .then((data) => {
     const container = document.getElementById("featured-products");
     
-   
     container.innerHTML = '';
     
     data.data.forEach((product, index) => {
@@ -318,7 +349,7 @@ function renderProducts(products) {
       banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
       banner.innerHTML = `
         <div class="banner-text">
-          <div class="banner-label">FORMA’SINT.</div>
+          <div class="banner-label">FORMA'SINT.</div>
           <div class="banner-title">You'll look and feel like the champion.</div>
         </div>
         <button class="banner-btn">

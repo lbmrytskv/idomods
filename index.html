@@ -8,11 +8,7 @@
   <title>FormaSint – Jackets & Outdoor Wear</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
-  <!-- Swiper CSS -->
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -20,15 +16,7 @@
   <header class="top-bar">
     <div class="header-left">
       <a href="./" class="logo-link">
-         <img
-          src="assets/icons/FORMA ICON.webp"
-          srcset="assets/icons/FORMA ICON.webp 1x, assets/icons/FORMA ICON@2x.webp 2x"
-          alt="FormaSint brand logo – outdoor men's clothing"
-          class="logo"
-          loading="lazy"
-          width="24"
-          height="24"
-        />
+        <img src="assets/icons/FORMA ICON.webp" srcset="assets/icons/FORMA ICON.webp 1x, assets/icons/FORMA ICON@2x.webp 2x" alt="FormaSint brand logo – outdoor men's clothing" class="logo" loading="lazy" width="24" height="24" />
       </a>
       <span class="brand">Forma'sint.</span>
       <span class="subbrand">idomods &lt;/&gt;</span>
@@ -43,121 +31,98 @@
     </nav>
 
     <div class="header-right">
-      <img
-        src="./assets/icons/ICONS.webp"
-        srcset="./assets/icons/ICONS.webp 1x, ./assets/icons/ICONS@2x.webp 2x"
-        alt="Frontend developer avatar"
-        class="avatar"
-        loading="lazy"
-        width="24"
-        height="24"
-      />
+      <img src="./assets/icons/ICONS.webp" srcset="./assets/icons/ICONS.webp 1x, ./assets/icons/ICONS@2x.webp 2x" alt="Frontend developer avatar" class="avatar" loading="lazy" width="24" height="24" />
       <span class="role">Frontend developer</span>
     </div>
 
-    
-    
-
-    <!-- MOBILE MENU -->
     <div class="mobile-menu-toggle">
-      <div class="burger-icon">
-        <div></div>
-      </div>
+      <div class="burger-icon"><div></div></div>
       <span class="menu-label">Menu</span>
     </div>
   </header>
 
-  <!-- MAIN SECTION -->
-    <main>
+  <div class="menu-overlay"></div>
+
+  <div class="mobile-menu-container">
+    <div class="mobile-menu-top">
+      <img src="assets/icons/FORMA ICON.webp" alt="Logo" class="menu-logo" />
+      <div class="menu-close">
+        <div class="menu-close-icon"></div>
+        <span class="close-text">CLOSE</span>
+      </div>
+    </div>
+    <nav class="mobile-menu-nav">
+      <a href="./" class="nav-link">HOME</a>
+      <a href="featured" class="nav-link">FEATURED PRODUCTS</a>
+      <a href="listing" class="nav-link">PRODUCT LISTING</a>
+    </nav>
+  </div>
+
+  <main>
     <section id="home" class="home-section">
       <div class="home-content">
         <h1 class="h1">Forma’Sint.</h1>
-        <img
-          src="assets/images/HERO PHOTO.webp"
-          srcset="assets/images/HERO PHOTO.webp 1x, assets/images/HERO PHOTO@2x.webp 2x"
-          alt="Climber in orange outdoor jacket on a glacier"
-          class="hero-img"
-          loading="lazy"
-          width="1836"
-          height="732"
-        />
+        <img src="assets/images/HERO PHOTO.webp" srcset="assets/images/HERO PHOTO.webp 1x, assets/images/HERO PHOTO@2x.webp 2x" alt="Climber in orange outdoor jacket on a glacier" class="hero-img" loading="lazy" width="1836" height="732" />
       </div>
     </section>
 
-     <!-- FEATURED PRODUCTS -->
-  <section id="featured" class="featured-section">
-  <div class="section-title">
-    <p class="section-subtitle">FEATURED PRODUCTS</p>
-    <h2 class="h2">Browse Featured</h2>
-  </div>
+    <section id="featured" class="featured-section">
+      <div class="section-title">
+        <p class="section-subtitle">FEATURED PRODUCTS</p>
+        <h2 class="h2">Browse Featured</h2>
+      </div>
 
-  <div class="swiper">
-    <div id="featured-products" class="swiper-wrapper"></div>
+      <div class="swiper">
+        <div id="featured-products" class="swiper-wrapper"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
 
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
-  </div>
-</section>
-
- <!-- LISTING SECTION -->
     <section id="listing" class="listing-section">
       <div class="listing-controls">
-  <label for="pageSizeSelect">Number of products per page:</label>
-
-  <div class="dropdown-wrapper">
-    <div class="custom-select-toggle" id="customSelectToggle">
-      <span class="custom-selected">14</span>
-      <span class="custom-icon"></span>
-    </div>
-    <ul class="custom-options" id="customOptions">
-      <li data-value="14" class="custom-option selected">14</li>
-      <li data-value="24" class="custom-option">24</li>
-      <li data-value="36" class="custom-option">36</li>
-    </ul>
-
-    
-    <select id="pageSizeSelect" style="display: none;">
-      <option value="14" selected>14</option>
-      <option value="24">24</option>
-      <option value="36">36</option>
-    </select>
-  </div>
-</div>
-
-
+        <label for="pageSizeSelect">Number of products per page:</label>
+        <div class="dropdown-wrapper">
+          <div class="custom-select-toggle" id="customSelectToggle">
+            <span class="custom-selected">14</span>
+            <span class="custom-icon"></span>
+          </div>
+          <ul class="custom-options" id="customOptions">
+            <li data-value="14" class="custom-option selected">14</li>
+            <li data-value="24" class="custom-option">24</li>
+            <li data-value="36" class="custom-option">36</li>
+          </ul>
+          <select id="pageSizeSelect" style="display: none;">
+            <option value="14" selected>14</option>
+            <option value="24">24</option>
+            <option value="36">36</option>
+          </select>
+        </div>
       </div>
-      <div id="product-listing" class="listing-grid container"></div>
 
+      <div id="product-listing" class="listing-grid container"></div>
       <div id="pagination" class="pagination-controls"></div>
     </section>
   </main>
-  
- 
-    <!-- Popup Modal -->
-    <div id="popup-overlay" class="popup-overlay">
-        <div class="popup-content">
-            <div class="popup-header">
-                <div class="popup-id">ID: 01</div>
-                <div class="popup-close-menu">
-                    <div class="popup-close-icon"></div>
-                    <div class="popup-close-text">CLOSE</div>
-                </div>
-            </div>
-            <img id="popup-image" class="popup-image" src="https://via.placeholder.com/600x400/4A90E2/FFFFFF?text=Product+Image" alt="Product image">
+
+  <div id="popup-overlay" class="popup-overlay">
+    <div class="popup-content">
+      <div class="popup-header">
+        <div class="popup-id">ID: 01</div>
+        <div class="popup-close-menu">
+          <div class="popup-close-icon"></div>
+          <div class="popup-close-text">CLOSE</div>
         </div>
+      </div>
+      <img id="popup-image" class="popup-image" src="https://via.placeholder.com/600x400/4A90E2/FFFFFF?text=Product+Image" alt="Product image">
     </div>
+  </div>
 
+  <footer></footer>
 
-  <footer>
-    <!-- Footer content -->
-  </footer>
-  <!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="script.js"></script>
-
 
 </body>
 </html>
