@@ -76,7 +76,39 @@ window.addEventListener("DOMContentLoaded", () => {
   loadProducts();
 });
 
+// Logo click effect
+const logoImg = document.querySelector('.logo');
+const originalSrc = logoImg.src;
+const originalSrcset = logoImg.srcset;
 
+function handleLogoClick() {
+  // Change to FLETTER.png on click
+  logoImg.src = "/idomods-frontend/assets/icons/FLETTER.webp";
+  logoImg.srcset = ""; // Clear srcset for single image
+  
+  // Reset to original after 200ms
+  setTimeout(() => {
+    logoImg.src = originalSrc;
+    logoImg.srcset = originalSrcset;
+  }, 200);
+}
+
+document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    
+    // Handle logo click effect
+    if (this.classList.contains('logo-link')) {
+      handleLogoClick();
+    }
+    
+    const href = this.getAttribute("href");
+    const fullUrl = new URL(href, window.location.origin);
+    const newPath = fullUrl.pathname;
+    history.pushState({}, "", newPath);
+    handleRoute(newPath);
+  });
+});
 
 // Popup functionality
 const popupOverlay = document.getElementById('popup-overlay');
@@ -117,7 +149,7 @@ fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
   .then((data) => {
     const container = document.getElementById("featured-products");
     
-    // Очищаємо контейнер на випадок повторного завантаження
+   
     container.innerHTML = '';
     
     data.data.forEach((product, index) => {
