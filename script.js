@@ -4,7 +4,7 @@ const topBar = document.querySelector('.top-bar');
 // Sticky header scroll effect
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
-  
+
   if (scrollY > 10) {
     topBar.classList.add('scrolled');
   } else {
@@ -105,26 +105,62 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Fetch featured products
+// Fetch featured products — Swiper version
 fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
   .then((res) => res.json())
   .then((data) => {
     const container = document.getElementById("featured-products");
+    
+    // Очищаємо контейнер на випадок повторного завантаження
+    container.innerHTML = '';
+    
     data.data.forEach((product, index) => {
-      const article = document.createElement("article");
-      article.classList.add("product-card");
-      article.innerHTML = `
-        <img src="${product.image}" loading="lazy" alt="${product.text}" />
-        <div class="product-title">${product.text}</div>
-        <div class="product-price">€200.00</div>
+      const slide = document.createElement("div");
+      slide.classList.add("swiper-slide");
+
+      slide.innerHTML = `
+        <article class="product-card">
+          <img src="${product.image}" loading="lazy" alt="${product.text}" />
+          <div class="product-title">${product.text}</div>
+          <div class="product-price">€200.00</div>
+        </article>
       `;
 
-      article.addEventListener("click", () => {
+      slide.addEventListener("click", () => {
         openPopup(product, index);
       });
 
-      container.appendChild(article);
+      container.appendChild(slide);
     });
+
+    // Ініціалізуємо Swiper після додавання всіх слайдів
+    new Swiper(".swiper", {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      loop: true,
+      // Видаляємо loopAdditionalSlides - Swiper сам визначить оптимальну кількість
+      centeredSlides: false,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 1,
+        },
+        1024: {
+          slidesPerView: 2,
+        },
+        1440: {
+          slidesPerView: 4,
+        }
+      },
+});
+
   });
 
 // === PRODUCT LISTING ===
@@ -146,8 +182,8 @@ pageSizeSelect.addEventListener("change", (e) => {
 // === CUSTOM DROPDOWN SYNC WITH SELECT ===
 const customToggle = document.getElementById("customSelectToggle");
 const customOptions = document.getElementById("customOptions");
-const selectedSpan = customToggle.querySelector(".custom-selected");
-const optionItems = customOptions.querySelectorAll(".custom-option");
+const selectedSpan = customToggle?.querySelector(".custom-selected");
+const optionItems = customOptions?.querySelectorAll(".custom-option");
 
 if (customToggle && customOptions && selectedSpan && optionItems.length) {
   let isOpen = false;
@@ -193,8 +229,6 @@ if (customToggle && customOptions && selectedSpan && optionItems.length) {
     }
   });
 }
-
-
 
 // Function for measuring columns count in grid
 function getGridColumns() {
@@ -244,21 +278,22 @@ function renderProducts(products) {
       const banner = document.createElement("div");
       banner.className = "banner";
       banner.style.gridColumn = `span ${Math.min(bannerConfig.span, columns)}`;
-     banner.innerHTML = `
-  <div class="banner-text">
-    <div class="banner-label">FORMA’SINT.</div>
-    <div class="banner-title">You'll look and feel like the champion.</div>
-  </div>
-  <button class="banner-btn">
-    CHECK THIS OUT
-    <span class="banner-icon">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 5L15 12L8 19" stroke="#1D1D1D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</span>
-
-  </button>
-`;
+      banner.innerHTML = `
+        <div class="banner-text">
+          <div class="banner-label">FORMA’SINT.</div>
+          <div class="banner-title">You'll look and feel like the champion.</div>
+        </div>
+        <button class="banner-btn">
+          CHECK THIS OUT
+          <span class="banner-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5L15 12L8 19" stroke="#1D1D1D" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </button>
+      `;
 
       productGrid.appendChild(banner);
       bannerInserted = true;
@@ -267,10 +302,8 @@ function renderProducts(products) {
     const card = document.createElement("article");
     card.className = "product-card";
     card.innerHTML = `
-    <div class="product-id">ID:${product.id}</div>
+      <div class="product-id">ID:${product.id}</div>
       <img src="${product.image}" loading="lazy" alt="${product.text}" />
-      
-      
     `;
 
     card.addEventListener("click", () => {
