@@ -2,7 +2,7 @@
   --font-primary: 'Inter', sans-serif;
 
   --font-size-h1: 96px;
-  --font-size-h2: 48px;
+  --font-size-h2: 42px;
   --font-size-body-large: 20px;
   --font-size-body: 16px;
   --font-size-label: 10px;
@@ -34,9 +34,12 @@ body {
 
 /* === TYPOGRAPHY === */
 .h1 {
-  font-size: var(--font-size-h1);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-heading);
+  font-size: var(--font-size-h1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .h2 {
@@ -759,7 +762,13 @@ body {
   .banner {
     max-width: calc(2 * 380px + 32px);
   }
+  .h1 {
+    font-size: 72px;
+  }
+
 }
+
+
 
 @media (max-width: 1200px) {
   .listing-grid {
@@ -773,6 +782,9 @@ body {
 
   .banner {
     max-width: calc(2 * 320px + 32px);
+  }
+  .h1 {
+    font-size: 60px;
   }
 }
 
@@ -789,6 +801,9 @@ body {
 
   .banner {
     max-width: calc(2 * 240px + 24px);
+  }
+  .h1 {
+    font-size: 48px;
   }
 }
 
@@ -830,6 +845,9 @@ body {
   .banner-btn {
     padding: 10px 32px;
     font-size: 14px;
+  }
+  .h1 {
+    font-size: 38px;
   }
 }
 
