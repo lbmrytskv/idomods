@@ -82,6 +82,8 @@ body {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  width: 100%;
+  min-width: 0;
 }
 
 .top-bar.scrolled {
@@ -356,6 +358,36 @@ body {
   background-color: #fff;
 }
 
+.product-label {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 4px 12px;
+  border-radius: 1000px;
+  font-weight: 500;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  color: #1D1D1D;
+  z-index: 2;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  background: url('assets/icons/heart.svg') center/contain no-repeat;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.fav-btn.active {
+  background: url('assets/icons/heart-filled.svg') center/contain no-repeat;
+}
+
 /* === SWIPER WRAPPER FOR FEATURED === */
 .swiper {
   width: 100%;
@@ -428,6 +460,14 @@ body {
   font-size: 16px;
   font-weight: 700;
 }
+
+.product-wrapper { 
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
 
 /* === SECTION HEADINGS === */
 .section-title {
@@ -850,6 +890,8 @@ body {
     font-size: 38px;
   }
 }
+
+
 
 /* === PAGINATION === */
 .pagination-controls {

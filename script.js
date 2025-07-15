@@ -1,10 +1,8 @@
 const metaDescription = document.querySelector('meta[name="description"]');
 const topBar = document.querySelector('.top-bar');
 
-// Sticky header scroll effect
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
-
   if (scrollY > 10) {
     topBar.classList.add('scrolled');
   } else {
@@ -44,13 +42,9 @@ function handleRoute(path) {
   const section = document.querySelector(meta.selector);
   if (section) {
     section.style.display = "block";
-    
-    
     if (cleanPath === "/") {
-      // scrolling to the very top of the page
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-     
       const headerHeight = topBar.offsetHeight;
       const elementPosition = section.offsetTop - headerHeight;
       window.scrollTo({ top: elementPosition, behavior: "smooth" });
@@ -65,6 +59,7 @@ function handleRoute(path) {
 document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
+    if (this.classList.contains('logo-link')) handleLogoClick();
     const href = this.getAttribute("href");
     const fullUrl = new URL(href, window.location.origin);
     const newPath = fullUrl.pathname;
@@ -79,6 +74,7 @@ window.addEventListener("popstate", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
   handleRoute(location.pathname);
+  initFeaturedProducts();
   loadProducts();
 });
 
@@ -88,35 +84,15 @@ const originalSrc = logoImg.src;
 const originalSrcset = logoImg.srcset;
 
 function handleLogoClick() {
-  // Change to FLETTER.png on click
   logoImg.src = "/idomods-frontend/assets/icons/FLETTER.webp";
-  logoImg.srcset = ""; // Clear srcset for single image
-  
-  // Reset to original after 200ms
+  logoImg.srcset = "";
   setTimeout(() => {
     logoImg.src = originalSrc;
     logoImg.srcset = originalSrcset;
   }, 200);
 }
 
-document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    
-    // Handle logo click effect
-    if (this.classList.contains('logo-link')) {
-      handleLogoClick();
-    }
-    
-    const href = this.getAttribute("href");
-    const fullUrl = new URL(href, window.location.origin);
-    const newPath = fullUrl.pathname;
-    history.pushState({}, "", newPath);
-    handleRoute(newPath);
-  });
-});
-
-// Mobile menu functionality
+// Mobile menu
 const mobileToggle = document.querySelector('.mobile-menu-toggle');
 const mobileMenuContainer = document.querySelector('.mobile-menu-container');
 const mobileMenuClose = document.querySelector('.menu-close');
@@ -127,7 +103,6 @@ function openMobileMenu() {
   mobileMenuContainer.classList.add('active');
   menuOverlay.classList.add('active');
 }
-
 function closeMobileMenu() {
   mobileMenuContainer.classList.remove('active');
   menuOverlay.classList.remove('active');
@@ -136,13 +111,9 @@ function closeMobileMenu() {
 mobileToggle.addEventListener('click', openMobileMenu);
 mobileMenuClose.addEventListener('click', closeMobileMenu);
 menuOverlay.addEventListener('click', closeMobileMenu);
+mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
 
-mobileMenuLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    closeMobileMenu();
-  });
-});
-// Popup functionality
+// Popup
 const popupOverlay = document.getElementById('popup-overlay');
 const popupImage = document.getElementById('popup-image');
 const popupId = document.querySelector('.popup-id');
@@ -155,85 +126,60 @@ function openPopup(product, index) {
   popupOverlay.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
 function closePopup() {
   popupOverlay.classList.remove('active');
   document.body.style.overflow = 'auto';
 }
 
 popupCloseMenu.addEventListener('click', closePopup);
-
 popupOverlay.addEventListener('click', (e) => {
-  if (e.target === popupOverlay) {
-    closePopup();
-  }
+  if (e.target === popupOverlay) closePopup();
 });
-
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closePopup();
-  }
+  if (e.key === 'Escape') closePopup();
 });
 
-// Fetch featured products — Swiper version
-fetch("https://brandstestowy.smallhost.pl/api/random?pageNumber=1&pageSize=4")
-  .then((res) => res.json())
-  .then((data) => {
-    const container = document.getElementById("featured-products");
-    
-    container.innerHTML = '';
-    
-    data.data.forEach((product, index) => {
-      const slide = document.createElement("div");
-      slide.classList.add("swiper-slide");
-
-      slide.innerHTML = `
-        <article class="product-card">
-          <img src="${product.image}" loading="lazy" alt="${product.text}" />
-          <div class="product-title">${product.text}</div>
-          <div class="product-price">€200.00</div>
-        </article>
-      `;
-
-      slide.addEventListener("click", () => {
-        openPopup(product, index);
-      });
-
-      container.appendChild(slide);
-    });
-
-    //  Swiper initialization
-    new Swiper(".swiper", {
-      slidesPerView: 1,
-      spaceBetween: 24,
-      loop: true,
-      
-      centeredSlides: false,
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
-      breakpoints: {
-        768: {
-          slidesPerView: 1,
-        },
-        1024: {
-          slidesPerView: 2,
-        },
-        1440: {
-          slidesPerView: 4,
-        }
-      },
-});
-
+// === FEATURED PRODUCTS HARDCODED ===
+function initFeaturedProducts() {
+  new Swiper(".swiper", {
+    slidesPerView: 1,
+    spaceBetween: 24,
+    loop: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    breakpoints: {
+      768: { slidesPerView: 1 },
+      1024: { slidesPerView: 2 },
+      1440: { slidesPerView: 4 }
+    },
   });
 
+  document.querySelectorAll('.fav-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      btn.classList.toggle('active');
+      e.stopPropagation();
+    });
+  });
+
+  document.querySelectorAll('.product-card').forEach((card, index) => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img');
+      const product = {
+        image: img.src,
+        text: card.querySelector('.product-title').textContent
+      };
+      openPopup(product, index);
+    });
+  });
+}
+
 // === PRODUCT LISTING ===
-const listingSection = document.getElementById("listing");
 const productGrid = document.getElementById("product-listing");
 const pagination = document.getElementById("pagination");
 const pageSizeSelect = document.getElementById("pageSizeSelect");
@@ -248,7 +194,7 @@ pageSizeSelect.addEventListener("change", (e) => {
   loadProducts();
 });
 
-// === CUSTOM DROPDOWN SYNC WITH SELECT ===
+// Custom dropdown sync
 const customToggle = document.getElementById("customSelectToggle");
 const customOptions = document.getElementById("customOptions");
 const selectedSpan = customToggle?.querySelector(".custom-selected");
@@ -259,11 +205,9 @@ if (customToggle && customOptions && selectedSpan && optionItems.length) {
 
   function updateDropdownValue(value) {
     selectedSpan.textContent = value;
-
     optionItems.forEach(i => i.classList.remove("selected"));
     const selectedItem = customOptions.querySelector(`[data-value="${value}"]`);
     if (selectedItem) selectedItem.classList.add("selected");
-
     pageSizeSelect.value = value;
     pageSize = parseInt(value);
     currentPage = 1;
@@ -280,7 +224,6 @@ if (customToggle && customOptions && selectedSpan && optionItems.length) {
     option.addEventListener("click", () => {
       const value = option.getAttribute("data-value");
       updateDropdownValue(value);
-
       isOpen = false;
       customToggle.style.display = "flex";
       customOptions.classList.remove("active");
@@ -288,10 +231,7 @@ if (customToggle && customOptions && selectedSpan && optionItems.length) {
   });
 
   document.addEventListener("click", (e) => {
-    if (
-      !customToggle.contains(e.target) &&
-      !customOptions.contains(e.target)
-    ) {
+    if (!customToggle.contains(e.target) && !customOptions.contains(e.target)) {
       isOpen = false;
       customToggle.style.display = "flex";
       customOptions.classList.remove("active");
@@ -299,35 +239,26 @@ if (customToggle && customOptions && selectedSpan && optionItems.length) {
   });
 }
 
-// Function for measuring columns count in grid
+// Helper functions for listing
 function getGridColumns() {
   const grid = document.getElementById("product-listing");
   if (!grid) return 1;
-
-  const computed = getComputedStyle(grid);
-  const columnCount = computed.gridTemplateColumns.split(" ").length;
-
-  return columnCount;
+  return getComputedStyle(grid).gridTemplateColumns.split(" ").length;
 }
 
-// Function for measuring banner position 
 function getBannerPosition(columns) {
-  switch(columns) {
-    case 4:
-      return { position: 5, span: 2 }; 
-    case 3:
-      return { position: 4, span: 2 }; 
-    case 2:
-      return { position: 4, span: 2 }; 
-    default:
-      return { position: 5, span: 2 }; 
+  switch (columns) {
+    case 4: return { position: 5, span: 2 };
+    case 3: return { position: 4, span: 2 };
+    case 2: return { position: 4, span: 2 };
+    default: return { position: 5, span: 2 };
   }
 }
 
 function loadProducts() {
   fetch(`https://brandstestowy.smallhost.pl/api/random?pageNumber=${currentPage}&pageSize=${pageSize}`)
-    .then((res) => res.json())
-    .then((data) => {
+    .then(res => res.json())
+    .then(data => {
       totalPages = data.totalPages;
       renderProducts(data.data);
       renderPagination();
@@ -336,10 +267,8 @@ function loadProducts() {
 
 function renderProducts(products) {
   productGrid.innerHTML = "";
-
   const columns = getGridColumns();
   const bannerConfig = getBannerPosition(columns);
-
   let bannerInserted = false;
 
   products.forEach((product, index) => {
@@ -363,7 +292,6 @@ function renderProducts(products) {
           </span>
         </button>
       `;
-
       productGrid.appendChild(banner);
       bannerInserted = true;
     }
@@ -374,18 +302,13 @@ function renderProducts(products) {
       <div class="product-id">ID:${product.id}</div>
       <img src="${product.image}" loading="lazy" alt="${product.text}" />
     `;
-
-    card.addEventListener("click", () => {
-      openPopup(product, index);
-    });
-
+    card.addEventListener("click", () => openPopup(product, index));
     productGrid.appendChild(card);
   });
 }
 
 function renderPagination() {
   pagination.innerHTML = "";
-
   for (let i = 1; i <= Math.min(totalPages, 10); i++) {
     const btn = document.createElement("button");
     btn.textContent = i;
@@ -405,8 +328,6 @@ let resizeTimeout;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    if (currentPage === 1) {
-      loadProducts();
-    }
+    if (currentPage === 1) loadProducts();
   }, 250);
 });
