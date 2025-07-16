@@ -436,23 +436,6 @@ function renderProducts(products) {
   });
 }
 
-function renderPagination() {
-  pagination.innerHTML = "";
-
-  for (let i = 1; i <= Math.min(totalPages, 10); i++) {
-    const btn = document.createElement("button");
-    btn.textContent = i;
-    btn.className = "page-btn";
-    if (i === currentPage) btn.classList.add("active");
-
-    btn.addEventListener("click", () => {
-      currentPage = i;
-      loadProducts();
-    });
-
-    pagination.appendChild(btn);
-  }
-}
 
 let resizeTimeout;
 window.addEventListener('resize', () => {
