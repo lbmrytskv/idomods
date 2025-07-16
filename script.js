@@ -220,14 +220,19 @@ function renderFeaturedProducts() {
     slide.classList.add("swiper-slide");
 
    slide.innerHTML = `
-  <article class="product-card">
-    ${product.label ? `<div class="product-label" style="background:${product.labelColor};">${product.label}</div>` : ''}
-    <button class="fav-btn" aria-label="Add to favorites"></button>
-    <img src="${product.image}" loading="lazy" alt="${product.title}" />
-    <div class="product-title">${product.title}</div>
-    <div class="product-price">${product.price}</div>
-  </article>
+  <div class="featured-product-wrapper">
+    <article class="product-card">
+      ${product.label ? `<div class="product-label" style="background:${product.labelColor};">${product.label}</div>` : ''}
+      <button class="fav-btn" aria-label="Add to favorites"></button>
+      <img src="${product.image}" loading="lazy" alt="${product.title}" />
+    </article>
+    <div class="product-description">
+      <div class="product-title">${product.title}</div>
+      <div class="product-price">${product.price}</div>
+    </div>
+  </div>
 `;
+
 
 
     slide.addEventListener("click", () => {
@@ -260,8 +265,12 @@ function renderFeaturedProducts() {
         slidesPerView: 2,
       },
       1440: {
-        slidesPerView: 4,
+        slidesPerView:3,
+      },
+      1790: {
+        slidesPerView: 4, 
       }
+
     },
   });
   document.querySelectorAll('.fav-btn').forEach(btn => {
