@@ -221,7 +221,7 @@ function renderFeaturedProducts() {
 
    slide.innerHTML = `
   <div class="featured-product-wrapper">
-    <article class="product-card">
+    <article class="product-card product-card--featured">
       ${product.label ? `<div class="product-label" style="background:${product.labelColor};">${product.label}</div>` : ''}
       <button class="fav-btn" aria-label="Add to favorites"></button>
       <img src="${product.image}" loading="lazy" alt="${product.title}" />
@@ -245,7 +245,6 @@ function renderFeaturedProducts() {
   // Swiper initialization
   new Swiper(".swiper", {
     slidesPerView: 1,
-    spaceBetween: 24,
     loop: true,
     
     centeredSlides: false,
@@ -422,7 +421,7 @@ function renderProducts(products) {
     }
 
     const card = document.createElement("article");
-    card.className = "product-card";
+    card.className = "product-card product-card--listing";
     card.innerHTML = `
       <div class="product-id">ID:${product.id}</div>
       <img src="${product.image}" loading="lazy" alt="${product.text}" />
