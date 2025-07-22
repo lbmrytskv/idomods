@@ -383,9 +383,24 @@ body {
 .swiper-button-prev,
 .swiper-button-next {
   
-  color: #1D1D1D;
+  width: 64px;
+  height: 64px;
+  background: #FFFFFF;
+  border: 1px solid #EAEAE8;
+  border-radius: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  transition: all 0.3s ease;
+  color:#1D1D1D;
  
 };
+
 
 
 .swiper-pagination-bullet {
