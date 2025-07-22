@@ -417,8 +417,6 @@ body {
 
 .product-id {
   position: absolute;
-  top: 16px;
-  left: 16px;
   font-size: var(--font-size-body); 
   font-weight: var(--font-weight-medium);
   color: #1D1D1D;
@@ -616,7 +614,7 @@ body {
   letter-spacing: -0.01em;
   text-transform: uppercase;
   color: #1D1D1D;
-  width: 714px;
+  width: 100%;
 }
 
 .banner-title {
@@ -627,7 +625,7 @@ body {
   line-height: 120%; 
   letter-spacing: -0.02em;
   color: #1D1D1D;
-  width: 714px;
+  width: 100%;
 }
 
 .banner-btn {
@@ -853,10 +851,13 @@ body {
   .banner {
     max-width: calc(2 * 240px + 24px);
   }
-  .h1 {
-    font-size: 48px;
-  }
+ 
   
+}
+
+.listing-controls {
+  flex-direction: column;
+  height: auto;
 }
 
 @media (max-width: 768px) {
@@ -886,16 +887,13 @@ body {
     grid-column: span 2;
     width: 100%;
     max-width: calc(2 * 158px + 24px);
-    padding: 24px 16px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    padding: 32px 24px;
+   
   }
 
   .banner-title {
-    font-size: 20px;
-    margin-bottom: 16px;
+    font-size: 32px;
+   
     
   }
 
@@ -903,9 +901,7 @@ body {
     padding: 10px 32px;
     font-size: 14px;
   }
-  .h1 {
-    font-size: 38px;
-  }
+  
 
   .home-section {
     padding:16px;
@@ -923,12 +919,19 @@ body {
     margin-top:24px;
     
   }
+  .h1 {
+    font-size: 48px;
+  }
   .h2 {
     font-size: 32px;
   }
 
   .swiper{
     padding:32px 0;
+  }
+
+  .product-id {
+    font-size: 8px;
   }
 
   

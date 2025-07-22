@@ -188,7 +188,7 @@ const featuredProducts = [
   {
     id: 2,
     image: "assets/images/product-2.png",
-    title: "Orange helmet for alpine TOUNDRA",
+    title: "Orange helmet TOUNDRA",
     price: "€300,00 EUR",
     label: "LIMITED EDITION",
     labelColor: "#B0D9C4"
@@ -246,6 +246,7 @@ function renderFeaturedProducts() {
   new Swiper(".swiper", {
     slidesPerView: 1,
     loop: true,
+    
     
     centeredSlides: false,
     navigation: {
