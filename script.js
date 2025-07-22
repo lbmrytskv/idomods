@@ -1,14 +1,24 @@
+// Constants
+const CONSTANTS = {
+  LOGO_ANIMATION_DURATION: 200,
+  RESIZE_DEBOUNCE_DELAY: 250,
+  SCROLL_THRESHOLD: 10,
+  DEFAULT_PAGE_SIZE: 14,
+  THROTTLE_DELAY: 16 // ~60fps
+};
+
 const metaDescription = document.querySelector('meta[name="description"]');
 const topBar = document.querySelector('.top-bar');
 
-// Sticky header scroll effect
+// Optimized sticky header scroll effect with throttling
+let scrollTimeout;
 window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-
-  if (scrollY > 10) {
-    topBar.classList.add('scrolled');
-  } else {
-    topBar.classList.remove('scrolled');
+  if (!scrollTimeout) {
+    scrollTimeout = setTimeout(() => {
+      const scrollY = window.scrollY;
+      topBar.classList.toggle('scrolled', scrollY > CONSTANTS.SCROLL_THRESHOLD);
+      scrollTimeout = null;
+    }, CONSTANTS.THROTTLE_DELAY);
   }
 });
 
@@ -45,12 +55,10 @@ function handleRoute(path) {
   if (section) {
     section.style.display = "block";
     
-    
     if (cleanPath === "/") {
       // scrolling to the very top of the page
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-     
       const headerHeight = topBar.offsetHeight;
       const elementPosition = section.offsetTop - headerHeight;
       window.scrollTo({ top: elementPosition, behavior: "smooth" });
@@ -62,26 +70,6 @@ function handleRoute(path) {
   }
 }
 
-document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    const href = this.getAttribute("href");
-    const fullUrl = new URL(href, window.location.origin);
-    const newPath = fullUrl.pathname;
-    history.pushState({}, "", newPath);
-    handleRoute(newPath);
-  });
-});
-
-window.addEventListener("popstate", () => {
-  handleRoute(location.pathname);
-});
-
-window.addEventListener("DOMContentLoaded", () => {
-  handleRoute(location.pathname);
-  loadProducts();
-});
-
 // Logo click effect
 const logoImg = document.querySelector('.logo');
 const originalSrc = logoImg.src;
@@ -92,28 +80,41 @@ function handleLogoClick() {
   logoImg.src = "/idomods-frontend/assets/icons/FLETTER.webp";
   logoImg.srcset = ""; // Clear srcset for single image
   
-  // Reset to original after 200ms
+  // Reset to original after animation duration
   setTimeout(() => {
     logoImg.src = originalSrc;
     logoImg.srcset = originalSrcset;
-  }, 200);
+  }, CONSTANTS.LOGO_ANIMATION_DURATION);
 }
 
+// Centralized navigation click handler
+function handleNavigationClick(e, link) {
+  e.preventDefault();
+  
+  // Handle logo click effect
+  if (link.classList.contains('logo-link')) {
+    handleLogoClick();
+  }
+  
+  const href = link.getAttribute("href");
+  const fullUrl = new URL(href, window.location.origin);
+  const newPath = fullUrl.pathname;
+  history.pushState({}, "", newPath);
+  handleRoute(newPath);
+}
+
+// Apply navigation handler to all nav links
 document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
-  link.addEventListener("click", function (e) {
-    e.preventDefault();
-    
-    // Handle logo click effect
-    if (this.classList.contains('logo-link')) {
-      handleLogoClick();
-    }
-    
-    const href = this.getAttribute("href");
-    const fullUrl = new URL(href, window.location.origin);
-    const newPath = fullUrl.pathname;
-    history.pushState({}, "", newPath);
-    handleRoute(newPath);
-  });
+  link.addEventListener("click", (e) => handleNavigationClick(e, link));
+});
+
+window.addEventListener("popstate", () => {
+  handleRoute(location.pathname);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  handleRoute(location.pathname);
+  loadProducts();
 });
 
 // Mobile menu functionality
@@ -142,6 +143,7 @@ mobileMenuLinks.forEach(link => {
     closeMobileMenu();
   });
 });
+
 // Popup functionality
 const popupOverlay = document.getElementById('popup-overlay');
 const popupImage = document.getElementById('popup-image');
@@ -197,8 +199,7 @@ const featuredProducts = [
     id: 3,
     image: "assets/images/product-3.png",
     title: "Grey alpine climbing jacket",
-    price: "€300,00 EUR",
-    
+    price: "€300,00 EUR"
   },
   {
     id: 4,
@@ -219,21 +220,19 @@ function renderFeaturedProducts() {
     const slide = document.createElement("div");
     slide.classList.add("swiper-slide");
 
-   slide.innerHTML = `
-  <div class="featured-product-wrapper">
-    <article class="product-card product-card--featured">
-      ${product.label ? `<div class="product-label" style="background:${product.labelColor};">${product.label}</div>` : ''}
-      <button class="fav-btn" aria-label="Add to favorites"></button>
-      <img src="${product.image}" loading="lazy" alt="${product.title}" />
-    </article>
-    <div class="product-description">
-      <div class="product-title">${product.title}</div>
-      <div class="product-price">${product.price}</div>
-    </div>
-  </div>
-`;
-
-
+    slide.innerHTML = `
+      <div class="featured-product-wrapper">
+        <article class="product-card product-card--featured">
+          ${product.label ? `<div class="product-label" style="background:${product.labelColor};">${product.label}</div>` : ''}
+          <button class="fav-btn" aria-label="Add to favorites"></button>
+          <img src="${product.image}" loading="lazy" alt="${product.title}" />
+        </article>
+        <div class="product-description">
+          <div class="product-title">${product.title}</div>
+          <div class="product-price">${product.price}</div>
+        </div>
+      </div>
+    `;
 
     slide.addEventListener("click", () => {
       openPopup(product, index);
@@ -246,8 +245,6 @@ function renderFeaturedProducts() {
   new Swiper(".swiper", {
     slidesPerView: 1,
     loop: true,
-    
-    
     centeredSlides: false,
     navigation: {
       nextEl: ".swiper-button-next",
@@ -265,26 +262,25 @@ function renderFeaturedProducts() {
         slidesPerView: 2,
       },
       1440: {
-        slidesPerView:3,
+        slidesPerView: 3,
       },
       1790: {
         slidesPerView: 4, 
       }
-
     },
   });
+  
   document.querySelectorAll('.fav-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    btn.classList.toggle('active');
-    e.stopPropagation();
+    btn.addEventListener('click', (e) => {
+      btn.classList.toggle('active');
+      e.stopPropagation();
+    });
   });
-});
 }
-
-
 
 // Initialize featured products on page load
 renderFeaturedProducts();
+
 // === PRODUCT LISTING ===
 const listingSection = document.getElementById("listing");
 const productGrid = document.getElementById("product-listing");
@@ -292,7 +288,7 @@ const pagination = document.getElementById("pagination");
 const pageSizeSelect = document.getElementById("pageSizeSelect");
 
 let currentPage = 1;
-let pageSize = 14;
+let pageSize = CONSTANTS.DEFAULT_PAGE_SIZE;
 let totalPages = 1;
 
 pageSizeSelect.addEventListener("change", (e) => {
@@ -384,6 +380,9 @@ function loadProducts() {
       totalPages = data.totalPages;
       renderProducts(data.data);
       renderPagination();
+    })
+    .catch((error) => {
+      console.error('Error loading products:', error);
     });
 }
 
@@ -436,7 +435,7 @@ function renderProducts(products) {
   });
 }
 
-
+// Optimized resize handler with debouncing
 let resizeTimeout;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimeout);
@@ -444,5 +443,5 @@ window.addEventListener('resize', () => {
     if (currentPage === 1) {
       loadProducts();
     }
-  }, 250);
+  }, CONSTANTS.RESIZE_DEBOUNCE_DELAY);
 });
