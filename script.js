@@ -40,6 +40,41 @@ const sectionsMeta = {
   }
 };
 
+// Function to update active navigation state
+function updateActiveNavigation(currentPath) {
+  // Remove active class from all nav links (both desktop and mobile)
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.classList.remove('active');
+  });
+  
+  // Map clean paths to actual href values in HTML
+  let targetHref;
+  switch(currentPath) {
+    case "/":
+    case "":
+      targetHref = "./";
+      break;
+    case "/featured":
+      targetHref = "featured";
+      break;
+    case "/listing":
+      targetHref = "listing";
+      break;
+    default:
+      targetHref = currentPath;
+  }
+  
+  // Find and activate the current nav link
+  const activeLink = document.querySelector(`.nav-link[href="${targetHref}"]`);
+  
+  if (activeLink) {
+    activeLink.classList.add('active');
+    console.log('Active link set for:', currentPath, '-> href:', targetHref, activeLink); // Debug log
+  } else {
+    console.log('No active link found for:', currentPath, '-> looking for href:', targetHref); // Debug log
+  }
+}
+
 function normalizePath(path) {
   if (path === "" || path === "/index.html") return "/";
   return path.replace(/\/+$/, "");
@@ -65,6 +100,15 @@ function handleRoute(path) {
     }
   }
 
+  // Update active navigation
+  let navPath;
+  if (cleanPath === "/") {
+    navPath = "./";
+  } else {
+    navPath = cleanPath.substring(1); // Remove leading slash
+  }
+  updateActiveNavigation(navPath);
+
   if (cleanPath === "/listing") {
     loadProducts();
   }
@@ -77,7 +121,7 @@ const originalSrcset = logoImg.srcset;
 
 function handleLogoClick() {
   // Change to FLETTER.png on click
-  logoImg.src = "/idomods-frontend/assets/icons/FLETTER.webp";
+  logoImg.src = "/assets/icons/FLETTER.webp";
   logoImg.srcset = ""; // Clear srcset for single image
   
   // Reset to original after animation duration
@@ -102,6 +146,17 @@ function handleNavigationClick(e, link) {
   history.pushState({}, "", newPath);
   handleRoute(newPath);
 }
+
+// Initialize active navigation on page load
+window.addEventListener("DOMContentLoaded", () => {
+  handleRoute(location.pathname);
+  loadProducts();
+});
+
+// Handle browser back/forward buttons
+window.addEventListener("popstate", () => {
+  handleRoute(location.pathname);
+});
 
 // Apply navigation handler to all nav links
 document.querySelectorAll('a.nav-link, .logo-link').forEach((link) => {
@@ -379,7 +434,7 @@ function loadProducts() {
     .then((data) => {
       totalPages = data.totalPages;
       renderProducts(data.data);
-      renderPagination();
+      
     })
     .catch((error) => {
       console.error('Error loading products:', error);
