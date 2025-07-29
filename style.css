@@ -154,17 +154,10 @@ body {
 .header-left span,
 .header-right .role,
 .desktop-nav a {
-  color: var(--color-text);
-  text-decoration: none;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 140%; 
-  text-align: center;
-  letter-spacing: -0.01em;
+  font-size: var(--font-size-body); 
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
 }
 
 .desktop-nav ul {
@@ -180,8 +173,6 @@ body {
 
 .desktop-nav a.active {
   text-decoration: underline;
-  text-decoration-line: underline;
-  color: #1D1D1D;
 }
 
 .header-right {
@@ -361,16 +352,6 @@ body {
   font-weight: 500;
   font-size: 16px;
   text-transform: uppercase;
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  line-height: 140%;
-  letter-spacing: -0.01em;
-  transition: all 0.2s ease;
-}
-.mobile-menu-nav a.active {
-  text-decoration: underline;
-  text-decoration-line: underline;
-  color: #1D1D1D;
 }
 
 /* === HERO === */
@@ -1029,3 +1010,4 @@ body {
     font-size: 8px;
   }
 }
+
